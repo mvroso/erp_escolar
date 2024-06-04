@@ -1,0 +1,147 @@
+1. website
+
+1.1 errors
+
+1.1.1 __init__.py	:	empty (used to make flask recognize '/errors' as a package)
+1.1.2 handlers.py	:	routes for error handlers
+
+1.1.2.1 error_404		:	handle 404 not found errors
+1.1.2.2 error_403		:	handle 403 forbidden access errors
+1.1.2.3 error_500		:	handle 500 server errors
+
+1.2 leads
+
+1.2.1 __init__.py	:	empty (used to make flask recognize '/leads' as a package)
+1.2.2 forms.py		:	forms for Lead class
+
+1.2.2.1 LeadFormMixin		:	mixin for create and update leads
+1.2.2.2 CreateLeadForm		:	create lead form extends LeadFormMixin
+1.2.2.3 UpdateLeadForm		:	update lead form extends LeadFormMixin
+1.2.2.4 FilterLeadForm		:	filter lead form			
+
+1.2.3 routes.py		:	routes for Lead class
+
+1.2.3.1 create_lead		:	create a new lead
+1.2.3.2 list_lead		:	show a list of existing leads
+1.2.3.3 filter_lead		:	filter a list of existing leads
+1.2.3.4 details_lead		:	show details of a single lead
+1.2.3.5 update_lead		:	update a single lead
+1.2.3.6 delete_lead		:	delete a single lead
+
+1.3 main
+
+1.3.1 __init__.py	:	empty (used to make flask recognize '/main' as a package)
+1.3.2 routes.py		:	routes for generic instructions and templates
+
+1.3.2.1 index			:	show index page
+1.3.2.2 contact			:	show contact page
+1.3.2.3 insertdata		:	populate the database for the first time with necessary and dummy data
+
+1.3.3 utils.py		:	utility functions for app routes
+
+1.3.3.1 save_picture		:	save user uploaded picture in '/static/img/profile_pictures'
+1.3.3.2 fetch_models		:	create models list to populate the database
+1.3.3.3 get_rand_datetime	:	create random datetime between two dates
+
+1.4 meetings
+
+1.4.1 __init__.py	:	empty (used to make flask recognize '/meetings' as a package)
+1.4.2 forms.py		:	forms for Meeting class
+
+1.4.2.1 AvailableTimeSelectForm	:	time select form for schedule and update meeting
+1.4.2.2 ScheduleMeetingForm	:	create and update meeting form extends AvailableTimeSelectForm
+
+1.4.3 routes.py		:	routes for Meeting class
+
+1.4.3.1  schedule_update_meeting	:	schedule and update a meeting
+1.4.3.2  list_meeting				:	show a list of existing meetings
+1.4.3.3  delete_meeting				:	delete a single meeting
+
+1.4.4 utils.py		:	utility functions for meeting routes
+
+1.4.4.1 get_choices				:	get standard calendar times
+1.4.4.2 get_weekdays			:	get weekday names in Portuguese
+1.4.4.3 get_next_working_days	:	get next working days
+
+1.5 static	:	static files such as css, js and user uploaded images
+
+1.6 templates
+
+1.6.1  account.html						:	users.account route
+1.6.2  base.html						:	parent template to all others (header, breadcrumbs, footer, doctype declaration, add css and js files)
+1.6.3  contact.html						:	main.contact route
+1.6.4  create_update_lead.html			:	leads.create_lead and leads.update_lead routes
+1.6.5  details_lead.html				:	leads.details_lead routes
+1.6.6  index.html						:	main.index route
+1.6.7  list_lead.html					:	leads.list_lead route
+1.6.8  list_meeting.html				:	meetings.list_meeting route
+1.6.9  login.html						:	users.login route
+1.6.10 register.html					:	users.register route
+1.6.11 reset_password.html				:	users.reset_password route
+1.6.12 reset_password_request.html		:	users.reset_password_request route
+1.6.13 schedule_update_meeting.html		:	meetings.schedule_update_meeting route
+1.6.14 setup_availability.html			:	users.setup_availability route
+
+1.6.15 errors
+
+1.6.15.1 403.html		:	403 forbidden access error route
+1.6.15.2 404.html		:	404 not found error route
+1.6.15.3 500.html		:	500 server error route
+
+1.7 users
+
+1.7.1 __init__.py	:	empty (used to make flask recognize '/users' as a package)
+1.7.2 forms.py		:	forms for User class
+
+1.7.2.1 RegistrationForm		:	user registration form
+1.7.2.2 LoginForm				:	login user form
+1.7.2.3 RequestResetForm		:	request reset password user form
+1.7.2.4 ResetPasswordForm		:	reset password user form
+1.7.2.5 UpdateAccountForm		:	update user form
+1.7.2.6 AvailableTimeSelectForm	:	time select form
+1.7.2.6 AvailabilityForm		:	availability form
+
+1.7.3 routes.py		:	routes for User class
+
+1.7.3.1 register					:	register a new user
+1.7.3.2 login						:	login user
+1.7.3.3 logout						:	logout user
+1.7.3.4 reset_password_request		:	reset password request user
+1.7.3.5 reset_password				:	reset password user
+1.7.3.6 account						:	show current user account
+1.7.3.7 setup_availability			:	setup user availability
+
+1.7.4 utils.py		:	utility functions for user routes
+
+1.7.4.1 send_reset_email		:	send reset email user
+1.7.4.2 get_choices				:	get standard calendar times
+1.7.4.3 get_weekdays			:	get weekday names in Portuguese
+
+1.8 __init__.py		:	app imports, extensions and blueprints initialization
+
+1.9 config.py		:	website configuration and environment variables loading
+
+1.10 models.py		:	models for database creation
+
+1.10.1  User			:	User class extends UserMixin (Flask-Login)
+1.10.2  Role			:	Role class (user permissions)
+1.10.3  Availability	:	Availability class (user available timeslots)
+1.10.4  Meeting			:	Meeting class
+1.10.5  Status			:	Status class
+1.10.6  Origin			:	Origin class
+1.10.7  Lead			:	Lead class
+1.10.8  History			:	History class
+
+2. .gitignore			:	file extensions that git is supposed to ignore	
+
+3. create_db.py			:	creates mysql database
+
+4. env_example.txt		:	.env file example
+
+5. README.md
+
+6. requirements.txt		:	required modules list
+
+7. run.py				:	run Flask app
+
+8. tree-explanation

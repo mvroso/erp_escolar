@@ -88,21 +88,6 @@ def list_lead(page=1, status_id=0, origin_id=0, date="-", phone="-", lead_name="
         status_id=status_id, origin_id=origin_id, date=date,
         lead_name=lead_name, email=email, description=description)
 
-
-# Show details of a single lead
-@leads.route("/lead/<int:lead_id>/details")
-@login_required
-def details_lead(lead_id):
-    lead = Lead.query.get_or_404(lead_id)
-    history = History.query.filter_by(lead_id=lead_id).all()
-    operation = Meeting.query.filter(Meeting.lead_id==lead.id, Meeting.start_time >= date.today() + timedelta(days=1)).first()
-    if operation == None:
-        operation = "schedule"
-    else:
-        operation = "update"
-
-    return render_template('details_lead.html', title='Detalhe Lead', operation=operation, lead=lead, history=history)
-
 # Filter a list of existing leads
 @leads.route("/lead/filter", methods=['GET', 'POST'])
 @login_required
@@ -138,6 +123,19 @@ def filter_lead():
 
     return render_template('create_update_lead.html', title='Filtrar Lead', form=form)
 
+# Show details of a single lead
+@leads.route("/lead/<int:lead_id>/details")
+@login_required
+def details_lead(lead_id):
+    lead = Lead.query.get_or_404(lead_id)
+    history = History.query.filter_by(lead_id=lead_id).all()
+    operation = Meeting.query.filter(Meeting.lead_id==lead.id, Meeting.start_time >= date.today() + timedelta(days=1)).first()
+    if operation == None:
+        operation = "schedule"
+    else:
+        operation = "update"
+
+    return render_template('details_lead.html', title='Detalhe Lead', operation=operation, lead=lead, history=history)
 
 # Update a single lead
 @leads.route("/lead/<int:lead_id>/update", methods=['GET', 'POST'])

@@ -68,27 +68,6 @@ def contact():
     
     return render_template('contact.html', title='Contato', form=form, legend='Create')
 
-# Populate the database for the first time with necessary data only
-@main.route("/insertdata/necessary")
-def necessary_insertdata():
-
-    (lead_statuses, lead_origins, roles) = fetch_models()
-
-    # create four lead statuses
-    db.session.add_all(lead_statuses)
-    db.session.commit()
-
-    # create five lead origins
-    db.session.add_all(lead_origins)
-    db.session.commit()  
-
-    # create two roles
-    db.session.add_all(roles)
-    db.session.commit()
-
-    flash('The database was populated with minimal data', 'info')
-    return redirect(url_for('main.index'))
-
 # Populate the database for the first time with necessary and dummy data
 @main.route("/insertdata")
 def insertdata():

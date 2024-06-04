@@ -98,22 +98,6 @@ def schedule_update_meeting(operation, lead_id, user_id):
     return render_template('schedule_update_meeting.html', title=title, form=form, legend='Marcar', lead=lead, operation=operation,
             all_available_timeslots=all_available_timeslots, previous_date=previous_date, previous_time=previous_time)
 
-# Delete a single meeting
-@meetings.route("/meeting/delete/<int:lead_id>", methods=['POST'])
-def delete_meeting(lead_id):
-    meeting = Meeting.query.filter(Meeting.lead_id==lead_id, Meeting.start_time >= datetime.now()).first()
-    history = History(action=("Reunião desmarcada"),
-                        registered=datetime.now(),
-                        user_id=current_user.id,
-                        lead_id=lead.id)
-
-    db.session.delete(meeting)
-    db.session.add(history)
-    db.session.commit()
-
-    flash('Reunião desmarcada com sucesso!', 'success')
-    return redirect(url_for('leads.list_lead'))
-
 # Show a list of existing meetings
 @meetings.route("/meeting/list")
 @login_required
@@ -140,3 +124,19 @@ def list_meeting():
 
     return render_template('list_meeting.html', title='Lista de Reuniões', 
         meetings=meetings, headings=headings)
+
+# Delete a single meeting
+@meetings.route("/meeting/delete/<int:lead_id>", methods=['POST'])
+def delete_meeting(lead_id):
+    meeting = Meeting.query.filter(Meeting.lead_id==lead_id, Meeting.start_time >= datetime.now()).first()
+    history = History(action=("Reunião desmarcada"),
+                        registered=datetime.now(),
+                        user_id=current_user.id,
+                        lead_id=lead.id)
+
+    db.session.delete(meeting)
+    db.session.add(history)
+    db.session.commit()
+
+    flash('Reunião desmarcada com sucesso!', 'success')
+    return redirect(url_for('leads.list_lead'))
