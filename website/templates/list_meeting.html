@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section id="testimonials" class="testimonials">
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <div class="col">
+        <h4>Veja suas próximas reuniões:</h4>
+      </div>
+    </div>
+    <table class="table table-hover table-sm">
+      <tbody>
+      {% set date_check = "" %}
+      {% for meeting in meetings %}
+        {% if headings[loop.index0] %}
+        <tr class="table-light">
+          <td colspan="10">{{ meeting.start_time.strftime("%A, %d de %B de %Y") | capitalize }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td style="width:10%">{{ meeting.start_time.strftime("%H:%M") }}</td>
+          <td><a href="{{ url_for('meetings.schedule_update_meeting', operation='update', user_id=current_user.id, lead_id=meeting.lead.id) }}">{{ meeting.lead.name }}</a></td>
+          {% if current_user.role.name == "Administrador" %}
+            <td>{{ meeting.user.name }}</td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <div class="row mt-2">
+        <p>Você pode também <a href="{{ url_for('leads.list_lead') }}">Marcar uma nova reunião</a>!</p>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="blog" class="blog">
+  <div class="container">
+    <div class="row justify-content-center" data-aos="fade-up">
+      <div class="col-lg-10 entries">
+
+        <div class="blog-comments">
+          
+          <div class="reply-form">
+            <h4>{{ title }}</h4>
+            <h6 class="text-muted">Segure a tecla 'Ctrl' para selecionar mais de um horário no mesmo dia</h6>
+            <form method="POST" action="">
+              {{ form.hidden_tag() }}
+              <div class="row mt-3 text-center">
+                <hr>
+                {% for select in form.weekdays %}
+                {% set outer_index0 = loop.index0 %}
+                <div class="col-sm-2">
+                  <h5>{{ weekday_names[outer_index0] }}</h5>
+                  <select class="form-select text-center" id="{{ select.available_timeslot.id }}" name="{{ select.available_timeslot.name }}" size="9" multiple>
+                    {% for value, label in select.available_timeslot.choices %}
+                        <option value="{{ value }}" {% if value in weekday_disabled_options %}disabled {% elif [outer_index0, value] in selected_options %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                {% endfor %}
+                <div class="col-sm-2">
+                    <h5>Sábado</h5>
+                    <select class="form-select text-center" id="{{ form.saturday.available_timeslot.id }}" name="{{ form.saturday.available_timeslot.name }}" size="9" multiple>
+                      {% for value, label in form.saturday.available_timeslot.choices %}
+                          <option value="{{ value }}" {% if value in saturday_disabled_options %}disabled {% elif [5, value] in selected_options %}selected{% endif %}>{{ label }}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col text-center">
+                  {{ form.submit(class="btn btn-primary") }}
+                </div>
+              </div>
+            </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock content %}

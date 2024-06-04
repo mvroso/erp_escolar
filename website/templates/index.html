@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+  <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+    <div class="carousel-inner" role="listbox">
+
+      <!-- Slide 1 -->
+      <div class="carousel-item active" style="background-image: url({{ url_for('static', filename='img/slide/slide-1.png') }});">
+        <div class="carousel-container">
+          <div class="carousel-content animate__animated animate__fadeInUp">
+            <h2>Seja bem-vindo ao <span>ERP & CRM Escolar</span></h2>
+            <p>Somos uma plataforma de ERP e CRM voltada para pequenas e médias escolas, projetada para otimizar a gestão administrativa e acadêmica. Facilitamos a organização das rotinas escolares, o acompanhamento do funil de matrícula de alunos e a comunicação com pais e responsáveis. Promovemos eficiência, integração e uma gestão escolar mais eficaz para todas as instituições que utilizam nossos serviços.</p>
+            <div class="text-center"><a href="" class="btn-get-started">Leia mais</a></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bx bx-left-arrow" aria-hidden="true"></span>
+    </a>
+
+    <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon bx bx-right-arrow" aria-hidden="true"></span>
+    </a>
+
+    <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+  </div>
+</section><!-- End Hero -->
+
+<main id="main">
+
+  <!-- ======= Cta Section ======= -->
+  <section id="cta" class="cta">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-9 text-center text-lg-left">
+          <h3>Venha conhecer nossos serviços!</h3>
+          <p> Nós oferecemos uma experiência completa de ERP & CRM para pequenas e médias escolas</p>
+        </div>
+        <div class="col-lg-3 cta-btn-container text-center">
+          <a class="cta-btn align-middle" href="{{ url_for('main.contact') }}">entre em contato</a>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Cta Section -->
+
+  <!-- ======= Services Section ======= -->
+  <section id="services" class="services">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon"><i class="bi bi-binoculars"></i></div>
+            <h4 class="title"><a href="#">Gestão de Leads</a></h4>
+            <p class="description">Armazena informações das Leads de forma dinâmica e visíveis para toda a empresa</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon"><i class="bi bi-person-workspace"></i></div>
+            <h4 class="title"><a href="#">Equipe</a></h4>
+            <p class="description">Permite a gestão da equipe e ajuda na independência no tratamento do funil de novos alunos pelos colaboradores</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+            <div class="icon"><i class="bi bi-calendar4-week"></i></div>
+            <h4 class="title"><a href="#">Agenda</a></h4>
+            <p class="description">Tenha visibilidade do seu calendário e da sua equipe a todo momento</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Services Section -->
+
+{% endblock content %}

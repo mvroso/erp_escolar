@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  {% if title %}
+    <title>ERP escolar - {{ title }}</title>
+  {% else %}
+    <title>ERP escolar</title>
+  {% endif %}
+  
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='img/erp-escolar-logo.ico') }}" rel="icon">
+  <link href="{{ url_for('static', filename='img/erp-escolar-logo.ico') }}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Muli:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='vendor/animate.css/animate.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='vendor/aos/aos.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css">
+
+  <!-- Template Main CSS File -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- =======================================================
+  * Template Name: Flattern - v4.7.0
+  * Template URL: https://bootstrapmade.com/flattern-multipurpose-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div class="logo">
+        <h1 class="text-light"><a href="{{ url_for('main.index') }}">ERP & CRM escolar</a></h1>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a {% if title == "Home" %}class="active"{% endif %} href="{{ url_for('main.index') }}">Home</a></li>
+          {% if current_user.is_authenticated %}
+          <li class="dropdown"><a href="#"><span>Leads</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{{ url_for('leads.create_lead') }}">Criar Lead</a></li>
+              <li><a href="{{ url_for('leads.list_lead') }}">Lista de Leads</a></li>
+              <li><a href="{{ url_for('leads.filter_lead') }}">Filtrar Leads</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Calendário</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{{ url_for('meetings.list_meeting') }}">Agenda</a></li>
+              <li><a href="{{ url_for('users.setup_availability') }}">Configurar Disponibilidade</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Gestão</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{{ url_for('users.account') }}">Minha Conta</a></li>
+              {% if current_user.role.name == "Administrador" %}
+              <li><a href="{{ url_for('users.register') }}">Criar Novo Usuário</a></li>
+              {% endif %}
+              <li><a href="{{ url_for('users.logout') }}">Logout</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li><a {% if title == "Contato" %}class="active"{% endif %} href="{{ url_for('main.contact') }}">Contato</a></li>
+          <li><a {% if title == "Login" %}class="active"{% endif %} href="{{ url_for('users.login') }}">Login</a></li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    {% if title != 'Home' %}
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{{ title }}</h2>
+          <ol>
+            <li><a href="{{ url_for('main.index') }}">Home</a></li>
+            <li>{{ title }}</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+    {% endif %}
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}
+  {% endblock content %}
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>ERP & CRM Escolar</h3>
+            <p>
+              Av. Prof. Luciano Gualberto, 380 <br>
+              São Paulo, SP 05508-010<br>
+              Brasil <br><br>
+              <strong>Telefone:</strong> +55 11 99999 9999<br>
+              <strong>Email:</strong> contact@erpescolar.com.br<br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Links úteis</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ url_for('main.index') }}">Home</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>ERP escolar</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/flattern-multipurpose-bootstrap-template/ -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+      
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/waypoints/noframework.waypoints.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/php-email-form/validate.js') }}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% if legend == "Marcar" %}
+  <script src="{{ url_for('static', filename='js/meeting-select.js') }}"></script>
+  {% endif %}
+
+</body>
+
+</html>

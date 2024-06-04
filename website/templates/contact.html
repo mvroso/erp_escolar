@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- ======= Contact Section ======= -->
+<section id="blog" class="blog">
+  <div class="container">
+    <div class="row justify-content-center" data-aos="fade-up">
+      <div class="col-lg-8 entries">
+
+        <div class="blog-comments">
+          
+          <div class="reply-form">
+            <h4>{{ title }}</h4>
+
+            <form method="POST" action="">
+            {{ form.hidden_tag() }}
+              <div class="row mt-3">
+                <div class="col">
+                  {{ form.name.label(class="form-label") }}
+                  {{ form.name(class="form-control") }}
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  {{ form.email.label(class="form-label") }}
+                  {{ form.email(class="form-control") }}
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-sm-6">
+                  {{ form.phone.label(class="form-label") }}
+                  {{ form.phone(class="form-control") }}
+                </div>
+                <div class="col-sm-6">
+                  {{ form.origin.label(class="form-label") }}
+                  {{ form.origin(class="form-select") }}
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  {{ form.description.label(class="form-label") }}
+                  {{ form.description(class="form-control") }}
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col text-center">
+                  {{ form.submit(class="btn btn-primary") }}
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- End Contact Section -->
+{% endblock content %}

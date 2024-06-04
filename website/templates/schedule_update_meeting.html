@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="blog" class="blog">
+  <div class="container">
+    <div class="row justify-content-center" data-aos="fade-up">
+      <div class="col-lg-10 entries">
+
+        <div class="blog-comments">
+          
+          <div class="reply-form">
+            <h4>{{ title }}</h4>
+
+            <form method="POST" action="">
+            {{ form.hidden_tag() }}
+              <div class="row mt-3 text-center">
+                <hr>
+                {% for date in all_available_timeslots %}
+                {% set select = form.weekdays[loop.index0] %}
+                <div class="col-sm-2">
+                  <h5>{{ date[1] }}</h5><h6>{{ date[0].strftime('%d/%m') }}</h6>
+                  <select class="form-select text-center" id="{{ select.available_timeslot.id }}" name="{{ select.available_timeslot.name }}" size="9" {% if previous_date != None and previous_date != date[0] %}disabled{% endif %}>
+                    {% for value, label in select.available_timeslot.choices %}
+                        <option value="{{ value }}" {% if value not in date[2] %}disabled {% elif previous_date == date[0] and previous_time == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="row mt-3">
+                <div class="col-sm-12">
+                  {{ form.description.label(class="form-label") }}
+                  {{ form.description(class="form-control") }}
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col text-center">
+                  {% if operation == "update" %}
+                  <button type="button" id="deleteButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Desmarcar reunião</button>
+                  {% endif %}
+                  <button type="button" id="resetButton" class="btn btn-secondary">Limpar seleção</button>
+                  {{ form.submit(class="btn btn-primary") }}
+                </div>
+              </div>
+            </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Desmarcar Reunião</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Você tem certeza que quer desmarcar essa reunião?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <form action="{{ url_for('meetings.delete_meeting', lead_id=lead.id)}}" method="POST">
+          <input class="btn btn-danger" type="submit" value="Delete">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

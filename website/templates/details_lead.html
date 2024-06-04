@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- ======= Blog Single Section ======= -->
+<section id="blog" class="blog">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row">
+
+      <article class="entry entry-single">
+        <h2 class="entry-title">
+          {{ lead.name }}
+        </h2>
+
+        <div class="entry-meta">
+          <ul>
+            <li class="d-flex align-items-center">
+              <i class="bi bi-mailbox"></i>
+              <a href="mailto:{{ lead.email }}">
+                {{ lead.email }}
+              </a>
+            </li>
+            <li class="d-flex align-items-center">
+              <i class="bi bi-whatsapp"></i>
+              <a href="https://wa.me/+{{ lead.phone }}?text=Olá,%20bom%20dia!">
+                +{{ lead.phone[:2] }} ({{ lead.phone[2:4] }}) {{ lead.phone[4:9] }}-{{ lead.phone[9:] }} 
+              </a>
+            </li>
+            <li class="d-flex align-items-center">
+              <i class="bi bi-calendar-date"></i>
+              {{ lead.registered.strftime("%d/%m/%Y") }}
+            </li>
+            <li class="d-flex align-items-center">
+              <img src="{{ url_for('static', filename='img/lead-statuses/' +
+                          lead.status.name) + '.png' }}" class="img-fluid" style="max-height: 1.5em;" alt="">
+              &nbsp;
+              {{ lead.status.name }}
+            </li>
+            <li class="d-flex align-items-center">
+              <i class="bi bi-people"></i>
+              {{ lead.origin.name }}
+          </ul>
+        </div>
+        <div class="entry-content">
+          <div class="row">
+            <p>
+              {{ lead.description }}
+            </p>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+            <table class="table table-hover table-sm caption-top">
+              <caption>Histórico de contatos</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Ação</th>
+                  <th scope="col">Usuário</th>
+                  <th scope="col">Horário</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for interaction in history %}
+                <tr>
+                  <td scope="row">
+                    {{ interaction.action }}
+                  </td>
+                  <td scope="row">
+                    {% if interaction.user != None %}
+                      {{ interaction.user.name }}
+                    {% else %}
+                      {{ interaction.lead.name }}
+                    {% endif %}
+                  </td>
+                  <td scope="row">
+                    {{ interaction.registered }}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            </div>
+          </div>          
+        </div>
+        <div class="entry-footer">
+          <i class="bi bi-arrow-return-right"></i>
+          <ul class="cats">
+            <li><a href="{{ url_for('leads.list_lead') }}">Pesquise por outro Lead</a></li>
+          </ul>
+          <i class="bi bi-person-workspace"></i>
+          <ul class="cats">
+            <li><a href="{{ url_for('meetings.schedule_update_meeting', operation=operation, user_id=current_user.id, lead_id=lead.id) }}">{% if operation == "schedule" %}Marcar{% elif operation == "update" %}Remarcar{% endif %} Reunião</a></li>
+          </ul>
+          <i class="bi bi-arrow-repeat"></i>
+          <ul class="cats">
+            <li><a href="{{ url_for('leads.update_lead', lead_id=lead.id) }}">Alterar Lead</a></li>
+          </ul>
+          <i class="bi bi-trash"></i>
+          <ul class="cats">
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal">Deletar Lead</a></li>
+          </ul>          
+        </div>
+
+      </article><!-- End blog entry -->
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Deletar Lead</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Você tem certeza que quer deletar esse Lead?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <form action="{{ url_for('leads.delete_lead', lead_id=lead.id)}}" method="POST">
+          <input class="btn btn-danger" type="submit" value="Delete">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}

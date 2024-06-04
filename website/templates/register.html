@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ======= Blog Single Section ======= -->
+<section id="blog" class="blog">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row justify-content-center">
+
+      <div class="col-lg-8 entries">
+
+        <div class="blog-comments">
+
+          <div class="reply-form">
+            <h4>{{ title }}</h4>
+
+            <form method="POST" action="">
+              {{ form.hidden_tag() }}
+
+              <div class="row mt-3">
+                <div class="col-sm-12">
+                  {{ form.name.label(class="form-label") }}
+                  {{ form.name(class="form-control") }}
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-sm-12">
+                  {{ form.email.label(class="form-label") }}
+                  {{ form.email(class="form-control") }}
+                </div>
+              </div>
+              <div class="row mt-3">
+                {% if current_user.is_authenticated and current_user.role.name == "Administrador" %}
+                <div class="col-sm-6">
+                  {{ form.gender.label(class="form-label") }}
+                  {{ form.gender(class="form-select") }}
+                </div>
+                <div class="col-sm-6">
+                  {{ form.role.label(class="form-label") }}
+                  {{ form.role(class="form-select") }}
+                </div>
+                {% else %}
+                <div class="col">
+                  {{ form.gender.label(class="form-label") }}
+                  {{ form.gender(class="form-select") }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="row mt-3">
+                <div class="col-sm-6">
+                  {{ form.password.label(class="form-label") }}
+                  {{ form.password(class="form-control") }}
+                </div>
+                <div class="col-sm-6">
+                  {{ form.confirm_password.label(class="form-label") }}
+                  {{ form.confirm_password(class="form-control") }}
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col text-center">
+                  {{ form.submit(class="btn btn-primary") }}
+                </div>
+              </div>
+
+            </form>
+
+
+        </div><!-- End blog comments -->
+
+      </div><!-- End blog entries list -->
+
+    </div>
+
+  </div>
+</section><!-- End Blog Single Section -->
+
+{% endblock content %}
