@@ -40,7 +40,7 @@
 	          <a href="{{ url_for('leads.details_lead', lead_id=lead.id) }}">
 	          	{{ lead.name | truncate(50) | title }}
 	          </a>
-	          </h3> <!-- CONSIDERAR ALTERAR PRA ULTIMA INTERAÇAO COM CLIENTE NO LUGAR DE REGISTERED -->
+	          </h3>
 	          <h4>{{ lead.origin.name }} - {{ lead.registered.strftime("%d/%m/%Y, %H:%M:%S") }}</h4>
 	          <p>
 	            {{ lead.description | truncate(150)}}
